@@ -8,7 +8,6 @@ import UserNotifications
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var categoryTextField: UITextField!
     
     
@@ -29,7 +28,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
-        SearchBar.delegate = self
         
         //カテゴリー一覧のpicker作成
         categoryPicker.delegate = self
@@ -37,20 +35,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         categoryPicker.showsSelectionIndicator = true
         categoryTextField.inputView = categoryPicker
     }
-    
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.text == "" {
-            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: false)
-            tableView.reloadData()
-        } else {
-        var kensaku = "category = '" + searchBar.text! + "'"
-        var categorysearch = realm.objects(Task.self).filter (kensaku)
-        taskArray = categorysearch
-        print(taskArray)
-        tableView.reloadData()
-        }
-    }
+
+//    // キーボード離れる時に呼ばれる
+//    @objc func dismissKeyboard() {
+//        view.endEditing(true)
+//    }
 
     // MARK: UITableViewのDataSourceプロトコルのメソッド
     // データの数を返すメソッド
@@ -172,6 +161,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    // カテゴリを選択したときに呼ばれるメソッド
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         categoryTextField.endEditing(true)
         

@@ -4,6 +4,9 @@ class Category: Object {
     //管理用ID。プライマリーキー
     @objc dynamic var id = 0
     
+    // カテゴリ名
+    @objc dynamic var name = ""
+    
     //カテゴリー
     @objc dynamic var category = ""
     
